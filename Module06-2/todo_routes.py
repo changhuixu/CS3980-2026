@@ -16,13 +16,26 @@ async def get_all_todos() -> list[Todo]:
     return todo_list
 
 
-@todo_router.post("")
+@todo_router.post("", status_code=201)
 async def create_new_todo(todo: TodoRequest) -> Todo:
     global global_id  # important, so that this variable will have value and tracked for every request
     global_id += 1
     new_todo = Todo(id=global_id, title=todo.title, desc=todo.desc)
     todo_list.append(new_todo)
     return new_todo
+
+
+@todo_router.put("/{id}")
+async def edit_todo_by_id(
+    id: Annotated[int, Path(gt=0, le=1000)], todo: TodoRequest
+) -> Todo:
+    for x in todo_list:
+        if x.id == id:
+            x.title = todo.title
+            x.desc = todo.desc
+            return x
+
+    raise HTTPException(status_code=404, detail=f"Item with ID={id} is not found.")
 
 
 @todo_router.get("/{id}")
