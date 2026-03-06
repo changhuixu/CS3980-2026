@@ -47,7 +47,7 @@ document.getElementById('edit-btn').addEventListener('click', (e) => {
 
   if (!titleInput.value || !descInput.value) {
     msgDiv.innerHTML =
-      'Please provide non-empty Title and Description when creating a new Todo';
+      'Please provide non-empty Title and Description when updating a Todo';
     return;
   }
 
