@@ -1,0 +1,6 @@
+{
+  "cSpell.words": ["uiowa"],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
+}

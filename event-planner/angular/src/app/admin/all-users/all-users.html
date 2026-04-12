@@ -1,0 +1,35 @@
+<h2>All Users</h2>
+@if (loading()) {
+  <section class="d-flex justify-content-center my-5">
+    <uiowa-ring />
+  </section>
+} @else {
+  <div class="table-responsive mt-2">
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Active</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of users(); track item.id) {
+          <tr>
+            <td>{{ item.email }}</td>
+            <td>{{ item.role }}</td>
+            <td>{{ item.active ? '&check;' : '&cross;' }}</td>
+            <td>
+              @if (item.email !== username) {
+                <button type="button" class="btn btn-link text-danger" (click)="updateStatus(item)">
+                  Update Status
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
