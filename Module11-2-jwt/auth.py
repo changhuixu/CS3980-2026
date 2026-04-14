@@ -8,8 +8,7 @@ ALGORITHM = "HS256"
 
 
 class TokenData(BaseModel):
-    hawk_id: str
-    email: str
+    username: str
     exp_datetime: datetime
 
 
@@ -21,22 +20,22 @@ def create_jwt_token(data: dict, expires_delta: timedelta = timedelta(minutes=20
     return encoded
 
 
-a = create_jwt_token({"hawkid": "hawk", "email": "hawk@uiowa.edu"})
-print(a)
+# a = create_jwt_token({"hawkid": "hawk", "email": "hawk@uiowa.edu"})
+# print(a)
 
 
 def decode_jwt_token(token: str) -> TokenData | None:
     try:
-        payload = jwt.decode(token, SECRET_KEY, [ALGORITHM])
-        hawk_id = payload.get("hawkid")
-        email = payload.get("email")
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username = payload.get("username")
         exp: int = payload.get("exp")
-        # Validate expiration time
+        if username is None or exp is None:
+            return None
         exp_datetime = datetime.fromtimestamp(exp)
-        return TokenData(hawk_id=hawk_id, email=email, exp_datetime=exp_datetime)
+        return TokenData(username=username, exp_datetime=exp_datetime)
     except jwt.InvalidTokenError:
         return None
 
 
-b = decode_jwt_token(a)
-print(b)
+# b = decode_jwt_token(a)
+# print(b)
