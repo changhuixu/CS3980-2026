@@ -6,8 +6,7 @@ from auth.hash_password import hash_password, verify_password
 from auth.jwt_handler import TokenData, create_access_token
 from database.connection import Database
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
-from models.users import User, TokenResponse, UserDto
+from models.users import User, UserDto, UserRole
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +18,7 @@ user_database = Database(User)
 @user_router.get("")
 async def get_all_users(user: TokenData = Depends(authenticate)) -> list[UserDto]:
     logger.info(f"User [{user.username}] is viewing all users.")
-    if user.role != "SuperAdmin":
+    if user.role != UserRole.SuperAdmin:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Operation not allowed"
         )
@@ -38,7 +37,7 @@ async def update_user_status(
     id: PydanticObjectId, user: TokenData = Depends(authenticate)
 ) -> dict:
     logger.info(f"User [{user.username}] is updating user #{id}' status.")
-    if user.role != "SuperAdmin":
+    if user.role != UserRole.SuperAdmin:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Operation not allowed"
         )

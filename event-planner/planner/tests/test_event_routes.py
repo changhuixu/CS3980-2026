@@ -1,13 +1,7 @@
-from httpx import AsyncClient
 import pytest
+from httpx import AsyncClient
 
-from auth.jwt_handler import create_access_token
 from models.events import Event, EventUpdate
-
-
-@pytest.fixture
-async def access_token() -> str:
-    return create_access_token("python-web-dev@cs.uiowa.edu")
 
 
 @pytest.fixture
@@ -44,9 +38,12 @@ async def test_get_events(default_client: AsyncClient, mock_event: Event) -> Non
 
 
 @pytest.mark.anyio
-async def test_get_event(default_client: AsyncClient, mock_event: Event) -> None:
+async def test_get_event(
+    default_client: AsyncClient, mock_event: Event, access_token: str
+) -> None:
     url = f"/events/{str(mock_event.id)}"
-    response = await default_client.get(url)
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = await default_client.get(url, headers=headers)
 
     assert response.status_code == 200
     assert response.json()["creator"] == mock_event.creator
@@ -83,13 +80,13 @@ async def test_post_event(default_client: AsyncClient, access_token: str) -> Non
 
 
 @pytest.mark.anyio
-async def test_get_events_count(default_client: AsyncClient) -> None:
+async def test_get_events_count(default_client: AsyncClient, mock_event: Event) -> None:
     response = await default_client.get("/events/")
 
     events = response.json()
 
     assert response.status_code == 200
-    assert len(events) == 2
+    assert len(events) == 1
 
 
 @pytest.mark.anyio
@@ -105,7 +102,7 @@ async def test_update_event(
     url = f"/events/{str(mock_event.id)}"
 
     response = await default_client.put(
-        url, data=test_payload.model_dump_json(), headers=headers
+        url, content=test_payload.model_dump_json(), headers=headers
     )
 
     assert response.status_code == 200
@@ -132,8 +129,11 @@ async def test_delete_event(
 
 
 @pytest.mark.anyio
-async def test_get_event_again(default_client: AsyncClient, mock_event: Event) -> None:
+async def test_get_event_again(
+    default_client: AsyncClient, mock_event: Event, access_token: str
+) -> None:
     url = f"/events/{str(mock_event.id)}"
-    response = await default_client.get(url)
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = await default_client.get(url, headers=headers)
 
     assert response.status_code == 200

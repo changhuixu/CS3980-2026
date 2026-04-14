@@ -26,7 +26,7 @@ async def sign_user_up(user: User) -> dict:
             detail="User with email provided exists already.",
         )
     hashed_password = hash_password(user.password)
-    user.password = hashed_password
+    user.password = str(hashed_password, "utf-8")
     await user_database.save(user)
     logger.info(f"\t User [{user.email}] is created.")
     return {"message": "User created successfully"}

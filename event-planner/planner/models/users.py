@@ -1,13 +1,21 @@
 from datetime import datetime
+from enum import StrEnum, unique
 
 from beanie import Document
 
 from pydantic import BaseModel, ConfigDict, EmailStr
 
 
+@unique
+class UserRole(StrEnum):
+    BasicUser = "BasicUser"
+    Admin = "Admin"
+    SuperAdmin = "SuperAdmin"
+
+
 class User(Document):
     email: EmailStr = ""
-    role: str = "BasicUser"
+    role: str = UserRole.BasicUser
     password: str = ""
     active: bool = True
 
@@ -31,5 +39,5 @@ class TokenResponse(BaseModel):
 class UserDto(BaseModel):
     id: str
     email: EmailStr = ""
-    role: str = "BasicUser"
+    role: str = UserRole.BasicUser
     active: bool = True

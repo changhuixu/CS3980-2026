@@ -10,6 +10,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     component: Home,
     canMatch: [authGuard],
+    data: { roles: ['BasicUser', 'Admin', 'SuperAdmin'] },
   },
   { path: 'login', component: Login },
   { path: 'signup', component: SignUp },
