@@ -19,7 +19,7 @@ export class AuthService {
       return {
         username: '',
         role: '',
-        token: '',
+        access_token: '',
         expiry: new Date(),
       };
     }
@@ -39,15 +39,7 @@ export class AuthService {
     formData.append('password', password);
     return this.http.post<AppUser>(`${this.apiUrl}/sign-in`, formData).pipe(
       map((x) => {
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            username: username,
-            role: x.role,
-            token: x.token,
-            expiry: x.expiry,
-          }),
-        );
+        localStorage.setItem('user', JSON.stringify(x));
         this._user.set(this.getUserFromStorage());
         return x;
       }),

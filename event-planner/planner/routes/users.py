@@ -2,8 +2,7 @@ import logging
 
 from beanie import PydanticObjectId
 from auth.authenticate import authenticate
-from auth.hash_password import hash_password, verify_password
-from auth.jwt_handler import TokenData, create_access_token
+from auth.jwt_handler import TokenData
 from database.connection import Database
 from fastapi import APIRouter, Depends, HTTPException, status
 from models.users import User, UserDto, UserRole

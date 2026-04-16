@@ -33,7 +33,7 @@ async def sign_user_up(user: User) -> dict:
 
 
 @auth_router.post("/sign-in", response_model=TokenResponse)
-async def sign_user_in(user: OAuth2PasswordRequestForm = Depends()) -> dict:
+async def sign_user_in(user: OAuth2PasswordRequestForm = Depends()) -> TokenResponse:
     logger.info(f"User [{user.username}] is signing in the system.")
     db_user = await User.find_one(User.email == user.username)
     if db_user and db_user.active:
@@ -45,7 +45,7 @@ async def sign_user_in(user: OAuth2PasswordRequestForm = Depends()) -> dict:
             return TokenResponse(
                 username=db_user.email,
                 role=db_user.role,
-                token=access_token,
+                access_token=access_token,
                 expiry=expiry,
             )
 

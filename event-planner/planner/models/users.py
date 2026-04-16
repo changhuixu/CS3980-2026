@@ -32,8 +32,9 @@ class User(Document):
 class TokenResponse(BaseModel):
     username: str
     role: str
-    token: str
+    access_token: str
     expiry: datetime
+    token_type: str = "bearer"
 
 
 class UserDto(BaseModel):

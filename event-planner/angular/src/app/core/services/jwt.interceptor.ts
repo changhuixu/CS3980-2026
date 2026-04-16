@@ -8,7 +8,7 @@ export function jwtInterceptor(
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
   const authService = inject(AuthService);
-  const accessToken = authService.user().token;
+  const accessToken = authService.user().access_token;
   if (accessToken) {
     request = request.clone({
       setHeaders: { Authorization: `Bearer ${accessToken}` },

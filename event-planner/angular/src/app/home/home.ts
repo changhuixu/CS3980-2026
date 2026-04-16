@@ -14,7 +14,7 @@ import { AuthService } from '../core';
           <div class="card-body">
             <div class="m-2">
               <h6>Your access token is</h6>
-              {{ user().token }}
+              {{ user().access_token }}
             </div>
             <div class="m-2">
               <h6>Token expires at:</h6>
