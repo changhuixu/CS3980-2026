@@ -7,4 +7,5 @@ def test_answer():
 
 
 def test_answer_fail():
-    assert func(3) == 5
+    result = func(3)
+    assert result == 5, f"Expected 5 but got {result}"  # custom assertion error message
