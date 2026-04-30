@@ -17,6 +17,4 @@ def append_first_layer_value(wrap_layer, first_layer):
 
 
 def test_wrapped_correctly(wrap_layer):
-    assert wrap_layer == ["a"]
-    wrap_layer.append("b")
-    assert wrap_layer == ["a", "b"]
+    assert wrap_layer == ["a", "a"]

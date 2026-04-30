@@ -3,7 +3,7 @@
 ```powershell
 python -m venv venv
 .\venv\Scripts\activate
-pip install fastapi beanie uvicorn bcrypt pydantic[email] pydantic-settings pyjwt python-multipart httpx pytest
+pip install fastapi beanie uvicorn bcrypt pydantic[email] pydantic-settings pyjwt python-multipart httpx pytest coverage
 # MacOS or Linux
 pip freeze > requirements.txt
 # Windows Powershell

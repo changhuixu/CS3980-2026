@@ -9,4 +9,4 @@ def f():
 def test_m():
     with pytest.raises(SystemExit):
         f()
-        print("I am done")
+        # print("I am done")

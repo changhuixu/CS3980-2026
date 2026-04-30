@@ -6,3 +6,16 @@ py -m venv venv
 pip install pytest
 
 ```
+
+## Coverage
+
+```powershell
+pip install pytest-cov # includes coverage
+# or
+pip install coverage
+
+pytest --cov
+# or
+coverage run -m pytest
+coverage html
+```
