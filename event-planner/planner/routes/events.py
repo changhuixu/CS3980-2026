@@ -13,7 +13,7 @@ event_router = APIRouter()
 event_database = Database(Event)
 
 
-@event_router.get("/", response_model=list[Event])
+@event_router.get("", response_model=list[Event])
 async def retrieve_all_events() -> list[Event]:
     events = await event_database.get_all()
     logger.info(f"viewing {len(events)} events")

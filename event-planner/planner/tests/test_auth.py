@@ -68,10 +68,10 @@ async def test_signin_returns_token_response(default_client: AsyncClient) -> Non
     body = response.json()
     assert body["username"] == email
     assert body["role"] == "BasicUser"
-    assert isinstance(body["token"], str)
+    assert isinstance(body["access_token"], str)
     assert "expiry" in body
 
-    token_data = jwt_handler.verify_access_token(body["token"])
+    token_data = jwt_handler.verify_access_token(body["access_token"])
     assert token_data.username == email
     assert token_data.role == "BasicUser"
 

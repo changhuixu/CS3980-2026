@@ -31,7 +31,7 @@ async def mock_event() -> Event:
 
 @pytest.mark.anyio
 async def test_get_events(default_client: AsyncClient, mock_event: Event) -> None:
-    response = await default_client.get("/events/")
+    response = await default_client.get("/events")
 
     assert response.status_code == 200
     assert response.json()[0]["_id"] == str(mock_event.id)
@@ -81,7 +81,7 @@ async def test_post_event(default_client: AsyncClient, access_token: str) -> Non
 
 @pytest.mark.anyio
 async def test_get_events_count(default_client: AsyncClient, mock_event: Event) -> None:
-    response = await default_client.get("/events/")
+    response = await default_client.get("/events")
 
     events = response.json()
 

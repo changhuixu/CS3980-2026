@@ -40,5 +40,5 @@ async def test_sign_user_in(default_client: AsyncClient) -> None:
     body = response.json()
     assert body["username"] == "test-user@cs.uiowa.edu"
     assert body["role"] == "BasicUser"
-    assert isinstance(body["token"], str)
+    assert isinstance(body["access_token"], str)
     assert "expiry" in body

@@ -1,4 +1,5 @@
 import os
+from typing import AsyncGenerator
 
 from httpx import ASGITransport, AsyncClient
 import pytest
@@ -19,7 +20,7 @@ jwt_handler.SECRET_KEY = TEST_SECRET_KEY
 
 
 @pytest.fixture
-async def default_client() -> AsyncClient:
+async def default_client() -> AsyncGenerator[AsyncClient, None]:
     await initialize_database()
     await User.find_all().delete()
     await Event.find_all().delete()
